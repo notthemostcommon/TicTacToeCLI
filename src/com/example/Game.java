@@ -65,7 +65,7 @@ public class Game {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                System.out.print(" [" + gameboard[j][i] + "] ");
+                System.out.print(" [" + gameboard[i][j] + "] ");
             }
 
                 System.out.println("|" + (i+1));
@@ -97,20 +97,20 @@ public class Game {
 
             if (counter % 2 == 0) {
                 System.out.println(player1 + " enter row (1-3)");
-                col = input.nextInt();
+                row = input.nextInt();
                 System.out.println(player1 + " enter column (1-3)");
 
-                row = input.nextInt();
+                col = input.nextInt();
                 setBoard(row - 1, col - 1, 'x');
 //                printBoard();
 
 //                System.out.println("counter is" + counter);
             } else {
                 System.out.println(player2 + " enter row (1-3)");
-                col = input.nextInt();
+                row = input.nextInt();
                 System.out.println(player2 + " enter column (1-3)");
 
-                row = input.nextInt();
+                col = input.nextInt();
                 setBoard(row - 1, col - 1, 'o');
                 printBoard();
 
@@ -127,35 +127,80 @@ public class Game {
       */
 
 
+//    public void  winningLogic() {
+//        if (counter == 9) {
+//            draw = true;
+//            keepPlaying = false;
+//            System.out.println("It's a draw! No winner :(");
+//        } else {
+//            for (int i = 0; i < 3; i++) {
+//
+////
+//                // check the rows to see if there are matching values in each spot
+//                if (gameboard[i][0] == gameboard[i][1] && gameboard[i][1] == gameboard[i][2] && gameboard[i][0] != Open) {
+//                    keepPlaying = false;
+//                    displayWinner();
+//                }
+//
+//                // check the colums to see if there are matching values in each spot
+//                 else if (gameboard[0][i] == gameboard[1][i] && gameboard[1][i] == gameboard[2][i] && gameboard[0][i] != Open) {
+//                    keepPlaying = false;
+//                    displayWinner();
+//
+//                }
+//
+//                // check diagonals for matching values
+//                else if (gameboard[0][0] == gameboard[1][1] && gameboard[1][1] == gameboard[2][2] && gameboard[0][0] != Open) {
+//                    keepPlaying = false;
+//                    displayWinner();
+//                }
+//
+//                // check other diagonal for matching values
+//                else if (gameboard[0][2] == gameboard[1][1] && gameboard[2][0] == gameboard[2][0] && gameboard[2][0] != Open) {
+//                    keepPlaying = false;
+//                    displayWinner();
+//
+//                } else keepPlaying = true;
+//            }
+//        }
+//    }
     public void  winningLogic() {
+        char x = 'x';
+        char o = 'o';
+        char space = ' ';
+        int xVal = (int) x;
+        int oVal = (int) o;
+        int spaceVal = (int) space;
+        System.out.println(xVal + oVal + spaceVal);
         if (counter == 9) {
             draw = true;
             keepPlaying = false;
             System.out.println("It's a draw! No winner :(");
         } else {
             for (int i = 0; i < 3; i++) {
-//
+
+//               // evaluate the entries in each square
                 // check the rows to see if there are matching values in each spot
-                if (gameboard[i][0] == gameboard[i][1] && gameboard[i][1] == gameboard[i][2] && gameboard[i][0] != Open) {
+                if (gameboard[i][0] + gameboard[i][1] + gameboard[i][2] == 360 || gameboard[i][0] + gameboard[i][1] + gameboard[i][2] == 333) {
                     keepPlaying = false;
                     displayWinner();
                 }
 
                 // check the colums to see if there are matching values in each spot
-                 else if (gameboard[0][i] == gameboard[1][i] && gameboard[1][i] == gameboard[2][i] && gameboard[0][i] != Open) {
+                else if (gameboard[0][i] + gameboard[1][i] + gameboard[2][i] == 360 || gameboard[0][i] + gameboard[1][i] + gameboard[2][i] == 333  ) {
                     keepPlaying = false;
                     displayWinner();
 
                 }
 
                 // check diagonals for matching values
-                else if (gameboard[0][0] == gameboard[1][1] && gameboard[1][1] == gameboard[2][2] && gameboard[0][0] != Open) {
+                else if (gameboard[0][0] + gameboard[1][1] + gameboard[2][2] == 360 || gameboard[0][0] + gameboard[1][1] + gameboard[2][2] == 333 ) {
                     keepPlaying = false;
                     displayWinner();
                 }
 
                 // check other diagonal for matching values
-                else if (gameboard[0][2] == gameboard[1][1] && gameboard[2][0] == gameboard[2][0] && gameboard[2][0] != Open) {
+                else if (gameboard[0][2] + gameboard[1][1] + gameboard[2][0] == 360 || gameboard[0][2] + gameboard[1][1] + gameboard[2][0] == 333) {
                     keepPlaying = false;
                     displayWinner();
 
@@ -175,6 +220,12 @@ public class Game {
             System.out.println("Congratulations " + player2 + "!. You WON!!");
 
         }
+        restartGame();
+    }
+
+    public void restartGame(){
+        System.out.println("Replay? y/n");
+        if (input.next()
     }
         // https://www.mkyong.com/java/how-to-convert-character-to-ascii-in-java/
 //    public static int CharToASCII(final char character){
