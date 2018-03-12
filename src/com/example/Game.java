@@ -225,11 +225,18 @@ public class Game {
 
     public void restartGame(){
         System.out.println("Replay? y/n");
-        if (input.next()
-    }
-        // https://www.mkyong.com/java/how-to-convert-character-to-ascii-in-java/
-//    public static int CharToASCII(final char character){
-//        return (int)character;
-//    }
+        start = input.next();
+        if (start.equalsIgnoreCase("y")) {
+            System.out.println("Good luck!");
 
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    gameboard[i][j] = Open;
+                }
+
+            }
+            printBoard();
+            playerTurn();
+        }
+    }
 }
