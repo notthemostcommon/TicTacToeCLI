@@ -3,11 +3,12 @@ import java.util.Scanner;
 
 
 public class Main {
-    public int counter = 0;
+    public static int counter = 0;
     static Scanner input = new Scanner(System.in);
     public static String player1;
     public static String player2;
     public static String start;
+
 
 
 
@@ -27,14 +28,23 @@ public class Main {
         }
 
 
-
-
+        playerTurn();
         newGame.gameStart();
         newGame.printBoard();
 
         input.close();
 
     }
+
+    public static void playerTurn(){
+        if (counter % 2 == 0){
+            System.out.println(player1 + "'s turn.");
+        } else {
+            System.out.println(player2 + "'s turn.");
+        }
+
+    }
+
 }
 
 
