@@ -87,7 +87,7 @@ public class Game {
 
             }
         } else {
-            System.out.println("Position already taken. Try Again!");
+            System.out.println("Try Again!");
         }
 
     }
@@ -155,9 +155,10 @@ public class Game {
                 }
 
                 // check other diagonal for matching values
-                else if (gameboard[0][2] == gameboard[1][1] && gameboard[2][0] == gameboard[2][0] && gameboard[0][2] != Open) {
+                else if (gameboard[0][2] == gameboard[1][1] && gameboard[2][0] == gameboard[2][0] && gameboard[2][0] != Open) {
                     keepPlaying = false;
                     displayWinner();
+
                 } else keepPlaying = true;
             }
         }
