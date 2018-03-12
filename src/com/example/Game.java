@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Game {
 
 
-    Scanner scanner = new Scanner(System.in);
+//    Scanner scanner = new Scanner(System.in);
     static Scanner input = new Scanner(System.in);
 
     private static char[][] gameboard;   // set up board with double array 3X3
@@ -165,18 +165,21 @@ public class Game {
 //        }
 //    }
     public void  winningLogic() {
-        char x = 'x';
-        char o = 'o';
-        char space = ' ';
-        int xVal = (int) x;
-        int oVal = (int) o;
-        int spaceVal = (int) space;
-        System.out.println(xVal + oVal + spaceVal);
-        if (counter == 9) {
-            draw = true;
-            keepPlaying = false;
-            System.out.println("It's a draw! No winner :(");
-        } else {
+//        char x = 'x';
+//        char o = 'o';
+//        char space = ' ';
+//        int xVal = (int) x;
+//        int oVal = (int) o;
+//        int spaceVal = (int) space;
+//        if (counter == 9) {
+//            for (int i = 0; i < 3; i++) {
+//                for (int j = 0; j < 3; j++) {
+//                    gameboard[i][j] = Open;
+//                }
+//
+//            }
+
+
             for (int i = 0; i < 3; i++) {
 
 //               // evaluate the entries in each square
@@ -204,10 +207,18 @@ public class Game {
                     keepPlaying = false;
                     displayWinner();
 
-                } else keepPlaying = true;
+                }
+                // check for draw, check that no cell is empty
+                // this solution will trigger 1 square early
+                else if (gameboard[i][0] != 32 &&  gameboard[i][1] != 32 &&  gameboard[i][2] != 32 && gameboard[0][i] != 32 &&  gameboard[1][i] != 32 &&  gameboard[2][i] != 32){
+                    draw = true;
+                    keepPlaying = false;
+                    System.out.println("It's a draw! No winner :(");
+                }
+                else keepPlaying = true;
             }
         }
-    }
+
 
 
 
@@ -221,6 +232,8 @@ public class Game {
 
         }
         restartGame();
+        // update score history with winner
+        // reset starting user to be winner of game
     }
 
     public void restartGame(){
