@@ -9,7 +9,7 @@ public class Game {
 
     private static char[][] gameboard;   // set up board with double array 3X3
     public char Open = ' ';
-    public int num = 1;
+//    public int num = 1;
 
     public static int col;
     public static int row;
@@ -18,25 +18,17 @@ public class Game {
     public static String player2;
     public static String start;
     public static boolean draw = false;
-
-
-
-
+    public static boolean keepPlaying = true;
 
     public Game() {
         gameboard = new char[3][3];
         gameStart();
-        printBoard();
 
 
-            playerTurn();
         }
 
-
-
-
     // reset each spot on board
-    public void gameStart (){
+    public void gameStart () {
         System.out.println("Player X, Enter Your Name:");
 
         player1 = input.next();
@@ -47,20 +39,27 @@ public class Game {
         start = input.next();
         if (start.equalsIgnoreCase("y")) {
             System.out.println("Good luck!");
-        }
 
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    gameboard[i][j] = Open;
+                }
 
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
-                gameboard[i][j] = Open;
             }
+            printBoard();
+
+//            while (keepPlaying == true);
+
+                playerTurn();
+
+
         }
     }
 
     // display gameboard
     public void printBoard (){
         System.out.println(" Tic Tac Toe");
-        System.out.println("--0----1----2--");
+        System.out.println("--1----2----3--");
 
         System.out.println("---------------");
 
@@ -69,7 +68,7 @@ public class Game {
                 System.out.print(" [" + gameboard[j][i] + "] ");
             }
 
-                System.out.println("|" + i);
+                System.out.println("|" + (i+1));
 
                 System.out.println("---------------");
 
@@ -82,41 +81,43 @@ public class Game {
                 if (gameboard[i][j] == Open){
                     gameboard[i][j] = player;
                     printBoard();
+                    counter++;
+
                 }
 
+            }
+        } else {
+            System.out.println("Position already taken. Try Again!");
         }
-        // reprint board with updated moves
 
-
-        }
     }
 
     public void playerTurn(){
-        winningLogic();
+        while (keepPlaying == true) {
 
-        if (counter % 2 == 0){
-            System.out.println(player1 + " enter row (1-3)");
-            row = input.nextInt();
-            System.out.println(player1 + " enter column (1-3)");
+            if (counter % 2 == 0) {
+                System.out.println(player1 + " enter row (1-3)");
+                row = input.nextInt();
+                System.out.println(player1 + " enter column (1-3)");
 
-            col = input.nextInt();
-            setBoard(row - 1, col - 1, 'x');
-            printBoard();
+                col = input.nextInt();
+                setBoard(row - 1, col - 1, 'x');
+//                printBoard();
 
-            counter ++;
-            System.out.println("counter is" + counter);
-        } else {
-            System.out.println(player2 + " enter row (1-3)" );
-            row = input.nextInt();
-            System.out.println(player2 + " enter column (1-3)");
+//                System.out.println("counter is" + counter);
+            } else {
+                System.out.println(player2 + " enter row (1-3)");
+                row = input.nextInt();
+                System.out.println(player2 + " enter column (1-3)");
 
-            col = input.nextInt();
-            setBoard(row-1, col-1, 'o');
-            printBoard();
+                col = input.nextInt();
+                setBoard(row - 1, col - 1, 'o');
+                printBoard();
 
-            counter ++;
-            System.out.println("counter is" + counter);
+//                System.out.println("counter is" + counter);
 
+            }
+            winningLogic();
         }
     }
     /*
@@ -124,23 +125,46 @@ public class Game {
      * checks winning logic
      * check if space to play is avaialable
       */
-    public boolean keepPlaying(){
-        return true;
-    }
 
-    public boolean winningLogic(){
-        if (counter == 9){
+
+    public void  winningLogic() {
+        if (counter == 9) {
             draw = true;
+            keepPlaying = false;
+            System.out.println("It's a draw! No winner :(");
         } else {
-            return true;
+            for (int i = 0; i < 3; i++) {
+//                System.out.println(gameboard[i][0]);
+//                System.out.println(gameboard[i][2]);
+//                System.out.println(gameboard[i][1]);
+                // check the rows to see if there are matching values in each spot
+                if (gameboard[i][0] == gameboard[i][1] && gameboard[i][1] == gameboard[i][2] && gameboard[i][0] != Open) {
+                    keepPlaying = false;
+                    displayWinner();
 
+                } else if (gameboard[0][i] == gameboard[1][i] && gameboard[1][i] == gameboard[2][i] && gameboard[0][i] != Open) {
+                    keepPlaying = false;
+                    displayWinner();
+                } else if (gameboard[0][0] == gameboard[1][1] && gameboard[1][1] == gameboard[2][2] && gameboard[0][0] != Open)
+                    keepPlaying = false;
+                displayWinner();
+            } else
+            if (gameboard[1][3] == gameboard[2][2] && gameboard[2][2] == gameboard[3][1] && gameboard[1][3] != Open)
+                keepPlaying = false;
+            displayWinner();
         }
-        return true;
+    }
 
+
+
+    public void displayWinner() {
+        if (counter % 2 == 0) {
+            System.out.println("Congratulations " + player1 + "!. You WON!!");
+        }
     }
-    // https://www.mkyong.com/java/how-to-convert-character-to-ascii-in-java/
-    public static int CharToASCII(final char character){
-        return (int)character;
-    }
+        // https://www.mkyong.com/java/how-to-convert-character-to-ascii-in-java/
+//    public static int CharToASCII(final char character){
+//        return (int)character;
+//    }
 
 }
