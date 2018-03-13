@@ -1,5 +1,7 @@
 package com.example;
 import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Game {
 
@@ -19,6 +21,7 @@ public class Game {
     public static String start;
     public static boolean draw = false;
     public static boolean keepPlaying = true;
+    public static int playerCounter;
 
     public Game() {
         gameboard = new char[3][3];
@@ -46,11 +49,9 @@ public class Game {
                 }
 
             }
+            playerCounter = 9;
             printBoard();
-
-//            while (keepPlaying == true);
-
-                playerTurn();
+            playerTurn();
 
 
         }
@@ -82,6 +83,7 @@ public class Game {
                     gameboard[i][j] = player;
                     printBoard();
                     counter++;
+                    System.out.println(counter);
 
                 }
 
@@ -180,7 +182,8 @@ public class Game {
 //            }
 
 
-            for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
 
 //               // evaluate the entries in each square
                 // check the rows to see if there are matching values in each spot
@@ -190,14 +193,14 @@ public class Game {
                 }
 
                 // check the colums to see if there are matching values in each spot
-                else if (gameboard[0][i] + gameboard[1][i] + gameboard[2][i] == 360 || gameboard[0][i] + gameboard[1][i] + gameboard[2][i] == 333  ) {
+                else if (gameboard[0][i] + gameboard[1][i] + gameboard[2][i] == 360 || gameboard[0][i] + gameboard[1][i] + gameboard[2][i] == 333) {
                     keepPlaying = false;
                     displayWinner();
 
                 }
 
                 // check diagonals for matching values
-                else if (gameboard[0][0] + gameboard[1][1] + gameboard[2][2] == 360 || gameboard[0][0] + gameboard[1][1] + gameboard[2][2] == 333 ) {
+                else if (gameboard[0][0] + gameboard[1][1] + gameboard[2][2] == 360 || gameboard[0][0] + gameboard[1][1] + gameboard[2][2] == 333) {
                     keepPlaying = false;
                     displayWinner();
                 }
@@ -210,14 +213,19 @@ public class Game {
                 }
                 // check for draw, check that no cell is empty
                 // this solution will trigger 1 square early
-                else if (gameboard[i][0] != 32 &&  gameboard[i][1] != 32 &&  gameboard[i][2] != 32 && gameboard[0][i] != 32 &&  gameboard[1][i] != 32 &&  gameboard[2][i] != 32){
-                    draw = true;
-                    keepPlaying = false;
-                    System.out.println("It's a draw! No winner :(");
-                }
-                else keepPlaying = true;
+
+                else if (counter == playerCounter) {
+
+                        draw = true;
+                        keepPlaying = false;
+                        System.out.println("It's a draw! No winner :(");
+                        restartGame();
+                    }
+
+                } else keepPlaying = true;
             }
         }
+
 
 
 
@@ -227,8 +235,10 @@ public class Game {
         // since the counter will already have been adjusted after a valid move, we need to check for opposites
         if (counter % 2 != 0) {
             System.out.println("Congratulations " + player1 + "!. You WON!!");
+            playerCounter = 0;
         } else {
             System.out.println("Congratulations " + player2 + "!. You WON!!");
+            playerCounter = 1;
 
         }
         restartGame();
